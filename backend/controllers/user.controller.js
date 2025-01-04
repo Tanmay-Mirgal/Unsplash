@@ -17,6 +17,9 @@ export const getUser = async (req, res) => {
 };
 export const followUser = async (req, res) => {
     try {
+        if (req.user._id.toString() === req.params.id) {
+            return res.status(400).json({ message: "You can't follow yourself" });
+        }
         const userToFollow = await User.findById(req.params.id);
         if (!userToFollow) {
             return res.status(404).json({ message: "User not found" });
@@ -37,6 +40,7 @@ export const followUser = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
 export const unfollowUser = async (req, res) => {
     try {
         const userToUnfollow = await User.findById(req.params.id);
@@ -73,16 +77,14 @@ export const getFollowers = async (req, res) => {
 };
 export const getFollowing = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).populate(
+        const user = await User.findById(req.user._id).populate(
             "following",
             "_id username profilePic"
         );
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
         res.status(200).json({ following: user.following });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+

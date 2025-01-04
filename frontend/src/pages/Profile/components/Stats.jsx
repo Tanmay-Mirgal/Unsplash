@@ -1,17 +1,19 @@
+import React from "react";
+
 const Stats = ({ photos, followers, following }) => {
   return (
-    <div className="flex gap-6">
-      <div>
-        <span className="font-bold">{photos}</span>
-        <span className="text-gray-600 ml-1">Photos</span>
+    <div className="flex justify-around py-4">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold">{photos}</h2>
+        <p className="text-sm text-gray-600">Posts</p>
       </div>
-      <div>
-        <span className="font-bold">{followers}</span>
-        <span className="text-gray-600 ml-1">Followers</span>
+      <div className="text-center">
+        <h2 className="text-2xl font-bold">{followers}</h2>
+        <p className="text-sm text-gray-600">Followers</p>
       </div>
-      <div>
-        <span className="font-bold">{following}</span>
-        <span className="text-gray-600 ml-1">Following</span>
+      <div className="text-center">
+        <h2 className="text-2xl font-bold">{following}</h2>
+        <p className="text-sm text-gray-600">Following</p>
       </div>
     </div>
   );

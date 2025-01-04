@@ -20,10 +20,10 @@ const UploadPost = ({ open, onOpenChange }) => {
     title: "",
     description: "",
     tags: "",
-    location: "",
-    image: "",
+    location: ""
   });
-  const { createPost, isLoading,posts } = usePostStore();
+
+  const { createPost, isLoading, isError, error } = usePostStore();
 
   // Drag & drop handlers
   const handleDrag = (e) => {
@@ -86,22 +86,33 @@ const UploadPost = ({ open, onOpenChange }) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-
+  
       // Append text data to formData
       Object.entries(postData).forEach(([key, value]) => {
         formData.append(key, value);
       });
-
+  
       // Append the image file if it's selected
       if (file) {
         formData.append("image", file);
+      } else {
+        console.error("No file selected");
       }
-
-      await createPost(formData);
-      onOpenChange(false); // Close the dialog on successful submission
+  
+      // Log formData entries for debugging
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+  
+      const response = await createPost(formData);
+      console.log("Post created successfully:", response.data);
     } catch (error) {
-      console.error("Error submitting post:", error);
+      console.error("Error creating post:", error.response ? error.response.data : error.message);
     }
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
   return (
@@ -114,32 +125,9 @@ const UploadPost = ({ open, onOpenChange }) => {
         <div className="space-y-6">
           {!preview ? (
             <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center ${
-                dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
-              } transition-colors duration-200`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
+              className={`border-2 border-dashed rounded-lg p-8`}
             >
-              <ImageIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <div className="text-lg mb-2">Drag and drop your photo here</div>
-              <div className="text-sm text-gray-500 mb-4">or</div>
-              <div>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  id="file-upload"
-                  onChange={handleFileInput}
-                />
-                <Button asChild>
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    <Upload className="h-4 w-4 mr-2" />
-                    Select from computer
-                  </label>
-                </Button>
-              </div>
+              <input type="file" onChange={handleFileChange} />
             </div>
           ) : (
             <div className="relative">
@@ -226,4 +214,3 @@ const UploadPost = ({ open, onOpenChange }) => {
 };
 
 export default UploadPost;
-

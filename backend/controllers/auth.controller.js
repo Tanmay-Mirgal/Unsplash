@@ -118,6 +118,7 @@ export const profile = async (req, res, next) => {
           twitter: user.twitter,
           instagram: user.instagram,
           facebook: user.facebook,
+          posts: user.posts
         },
       });
     } catch (error) {

@@ -46,7 +46,7 @@ app.use(fileUpload({
     createParentPath: true,
 }));
 
-app.use(express.static(path.join(__dirname,'frontend/dist')));
+// app.use(express.static(path.join(__dirname,'frontend/dist')));
 
 //Routes
 app.use('/api/auth',authRoutes);
@@ -65,9 +65,9 @@ setTimeout(async () => {
     }
 }, 5000);
 
-app.use('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,"frontend","dist","index.html"));
-})
+// app.use('*',(req,res)=>{
+//     res.sendFile(path.join(__dirname,"frontend","dist","index.html"));
+// })
 
 app.listen(PORT,()=>{
     connectDB();

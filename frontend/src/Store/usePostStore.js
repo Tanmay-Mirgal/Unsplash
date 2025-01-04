@@ -8,20 +8,9 @@ export const usePostStore = create((set, get) => ({
     isError: false,
     error: null,
 
-    createPost: async (data) => {
+    createPost: async (formData) => {
       try {
         set({ isLoading: true, isError: false, error: null });
-    
-        // Initialize FormData
-        const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-          formData.append(key, value);
-        });
-    
-        // Append the image if it's available (change the key to 'image')
-        if (data.image) {
-          formData.append('image', data.image);
-        }
     
         const res = await axiosInstance.post('/post/create', formData, {
           headers: {
@@ -46,9 +35,6 @@ export const usePostStore = create((set, get) => ({
       }
     },
     
-  
-
-  
     getPostById: async (id) => {
         set({ isError: false, error: null });
         try {

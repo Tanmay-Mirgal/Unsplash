@@ -82,7 +82,7 @@ export const getUserPosts = async (req,res)=>{
     }
 }
 
-export const UserPostsById = async (req,res)=>{
+export const getPostsById = async (req,res)=>{
     try {
         const postId = req.params.id;
         const post = await Post.findById(postId);
@@ -91,6 +91,7 @@ export const UserPostsById = async (req,res)=>{
         }
         return res.status(200).json({post});
     } catch (error) {
+        console.log(error);
         res.status(500).json({message:error.message});
     }
 }

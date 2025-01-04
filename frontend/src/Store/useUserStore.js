@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { axiosInstance } from '../lib/axios'
 import toast from "react-hot-toast";
 
+
 export const useUserStore = create((set) => ({
   user: JSON.parse(localStorage.getItem('user')) || null,
   isLoading: false,
@@ -165,7 +166,92 @@ export const useUserStore = create((set) => ({
       toast.error(errorMessage);
       throw error;
     }
-  }
+  },
+
+  getFollowers :async()=>{
+    try {
+      set({isLoading :true})
+      const response = await axiosInstance.get('/user/get-followers');
+      const { followers } = response.data;
+      localStorage.setItem('followers', JSON.stringify(followers));
+      set({
+        isLoading : false,
+        isError: false,
+        followers
+      })
+      toast.success('Followers fetched successfully');
+      return followers;
+    } catch (error) {
+      console.error(error)
+      const errorMessage = error?.response?.data?.message || 'An unexpected error occurred';
+      set({ isError: true, error: errorMessage, isLoading: false });
+      toast.error(errorMessage);
+      throw error;
+    }
+
+  },
+  getFollowing : async()=>{
+    try {
+      set({isLoading :true})
+      const response = await axiosInstance.get('/user/get-following');
+      const { following } = response.data;
+      localStorage.setItem('following', JSON.stringify(following));
+      set({
+        isLoading : false,
+        isError: false,
+        following
+      })
+      toast.success('Following fetched successfully');
+      return following;
+    } catch (error) {
+      console.error(error)
+      const errorMessage = error?.response?.data?.message || 'An unexpected error occurred';
+      set({ isError: true, error: errorMessage, isLoading: false });
+      toast.error(errorMessage);
+      throw error;
+
+    }
+  },
+  followUser : async(userId) => {
+    try {
+      const response = await axiosInstance.post(`/user/follow-user/${userId}`);
+      const { user } = response.data;
+      localStorage.setItem('user', JSON.stringify(user));
+      set({
+        isLoading: false,
+        isError: false,
+        user
+      })
+      toast.success('User followed successfully');
+      return user;
+    } catch (error) {
+      console.error(error)
+      const errorMessage = error?.response?.data?.message || 'An unexpected error occurred';
+      set({ isError: true, error: errorMessage, isLoading: false });
+      toast.error(errorMessage);
+      throw error;
+    }
+  },
+  unfollowUser : async(userId) => {
+    try {
+      const response = await axiosInstance.post(`/user/unfollow-user/${userId}`);
+      const { user } = response.data;
+      localStorage.setItem('user', JSON.stringify(user));
+      set({
+        isLoading: false,
+        isError: false,
+        user
+      })
+      toast.success('User unfollowed successfully');
+      return user;
+    } catch (error) {
+      console.error(error)
+      const errorMessage = error?.response?.data?.message || 'An unexpected error occurred';
+      set({ isError: true, error: errorMessage, isLoading: false });
+      toast.error(errorMessage);
+      throw error;
+    }
+  },
 
 }))
 

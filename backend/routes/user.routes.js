@@ -10,7 +10,7 @@ router.get('/get-user/:id',protectedRoute,getUser);
 router.post('/follow-user/:id',protectedRoute,followUser);
 router.post('/unfollow-user/:id',protectedRoute,unfollowUser);
 router.get('/get-followers',protectedRoute,getFollowers);
-router.get('/get-following/:id',protectedRoute,getFollowing);
+router.get('/get-following',protectedRoute,getFollowing);
 
 
 

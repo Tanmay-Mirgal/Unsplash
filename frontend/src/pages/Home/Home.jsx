@@ -74,7 +74,7 @@ const UnsplashClone = () => {
           >
             {posts.map((post) => (
               <div
-                key={post.id}
+                key={post._id}
                 className="relative group cursor-pointer overflow-hidden"
                 style={{
                   gridRowEnd: `span ${Math.floor(

@@ -1,28 +1,48 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/components/ui/button";
 import Uploadpost from "./components/Uploadpost";
 import Header from "./components/Header";
-import Stats from "./components/Stats";
 import ProfileTabs from "./components/Tabs";
 
 const ProfilePage = () => {
   const [open, setOpen] = useState(false);
+  const [parsedUser, setParsedUser] = useState(null);
 
-  // Mock data - replace with real data in production
-  const parsedUser = JSON.parse(localStorage.getItem("profile"));
+  useEffect(() => {
+    const profileData = localStorage.getItem("user");
+    if (profileData) {
+      setParsedUser(JSON.parse(profileData));
+    }
+  }, []);
+
+  if (!parsedUser) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        No profile data available
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
       <Header user={parsedUser} />
-      <div className="max-w-6xl mx-auto px-4 py-4">
-        {/* <Stats 
-          photos={parsedUser?.stats?.photos || 0}
-          followers={parsedUser?.stats?.followers || 0}
-          following={parsedUser?.stats?.following || 0} 
-        /> */}
+      <div className="max-w-xl  px-4 py-2 -mt-9  ml-[30vh]">
+        <div className="flex justify-evenly ">
+          <div className="text-center">
+            <h2 className="text-lg font-semibold">{parsedUser.posts?.length || 0}</h2>
+            <p className="text-xs text-gray-500">Posts</p>
+          </div>
+          <div className="text-center">
+            <h2 className="text-lg font-semibold">{parsedUser.followers?.length || 0}</h2>
+            <p className="text-xs text-gray-500">Followers</p>
+          </div>
+          <div className="text-center">
+            <h2 className="text-lg font-semibold">{parsedUser.following?.length || 0}</h2>
+            <p className="text-xs text-gray-500">Following</p>
+          </div>
+        </div>
       </div>
-      <div className="border-t">
+      <div className="border-t mt-4">
         <ProfileTabs />
       </div>
       <Button
@@ -38,4 +58,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
