@@ -9,7 +9,8 @@ router.post('/create',protectedRoute ,createPost);
 
 router.get('/user',protectedRoute,getUserPosts);
 router.get('/:id',protectedRoute,getPostsById );
-router.delete('/:id',protectedRoute,deletePost);
+router.delete('/delete/:id',protectedRoute,deletePost);
 router.get('/', allPosts);
+
     
 export default router;

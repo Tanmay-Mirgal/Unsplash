@@ -85,7 +85,8 @@ export const getUserPosts = async (req,res)=>{
 export const getPostsById = async (req,res)=>{
     try {
         const postId = req.params.id;
-        const post = await Post.findById(postId);
+        const post = await Post.findById(postId).populate("user", "username email profilePic") // Fetch user details
+        .populate("comments"); // Fetch comments
         if(!post){
             return res.status(400).json({message:'Post not found'});
         }

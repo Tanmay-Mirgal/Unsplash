@@ -107,7 +107,25 @@ export const usePostStore = create((set, get) => ({
 
             console.error('Error fetching user posts:', error);
         }
-    }
+    },
+    deletePost: async (id) => {
+      console.log("Post ID to delete:", id); // Debugging
+      try {
+        set({ isLoading: true, isError: false, error: null });
+        const res = await axiosInstance.delete(`/post/delete/${id}`);
+        const updatedPosts = get().posts.filter((post) => post._id !== id);
+        set({ posts: updatedPosts, isLoading: false });
+        toast.success('Post deleted successfully'); // Notify success
+        return res;
+      } catch (error) {
+        console.error('Error in deletePost:', error.response?.data || error.message);
+        set({ isLoading: false, isError: true, error: error.response?.data?.error || 'Server error' });
+        toast.error(error.response?.data?.error || 'Server error'); // Notify error
+      }
+    },
+    
+ 
+
 
 
 }))
