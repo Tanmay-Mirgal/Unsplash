@@ -13,6 +13,12 @@ const ProfileTabs = () => {
         <TabsTrigger value="likes" className="flex gap-2 justify-center">
           <Heart className="h-4 w-4" /> Likes
         </TabsTrigger>
+        <TabsTrigger value="collections" className="flex gap-2 justify-center">
+          <BookmarkIcon className="h-4 w-4" /> Collections
+        </TabsTrigger>
+        <TabsTrigger value="stats" className="flex gap-2 justify-center">
+          <Camera className="h-4 w-4" /> Stats
+        </TabsTrigger>
       </TabsList>
 
       <TabsContent value="photos">
