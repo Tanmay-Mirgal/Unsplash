@@ -3,7 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import {v2 as cloudinary} from 'cloudinary';
@@ -59,7 +59,7 @@ app.use('/api/comment',commentRoutes);
 
 setTimeout(async () => {
     try {
-        await fs.promises.unlink(path.join(__dirname, "temp", "file.txt"));
+        await fs.unlink(path.join(__dirname, "temp", "file.txt"));
     } catch (error) {
         if (error.code !== "ENOENT") {
             console.error(error);
@@ -75,5 +75,4 @@ app.listen(PORT,()=>{
     connectDB();
     console.log(`Server is running on port ${PORT}`);
 })
-
 
