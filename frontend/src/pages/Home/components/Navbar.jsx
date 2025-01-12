@@ -11,39 +11,35 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex items-center justify-between p-4 border-b md:max-w-6xl md:mx-auto md:flex md:items-center md:justify-between md:space-x-4 md:p-6 md:px-4 lg:px-8">
-        <div className="flex items-center space-x-4 md:space-x-6">
+      <nav className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center space-x-4">
           <Link to="/">
             <img
               src={logo}
               alt=""
-              className="w-[50px] h-[50px] rounded-lg cursor-pointer md:w-[70px] md:h-[70px]"
+              className="w-[50px] h-[50px] rounded-lg cursor-pointer"
             />
           </Link>
           <Input
             type="search"
             placeholder="Search high-resolution images"
-            className="w-full h-[40px] md:w-[300px] md:h-[50px]"
+            className="w-[140vh] h-[40px]"
           />
         </div>
-        <div className="flex items-center space-x-4 md:space-x-6">
+        <div className="flex items-center space-x-4">
           {!user && (
             <>
               <Link to="/login">
-                <Button variant="ghost" className="md:hidden md:px-6 md:py-3">
-                  Login
-                </Button>
+                <Button variant="ghost">Login</Button>
               </Link>
               <Link to="/signup">
-                <Button variant="ghost" className="md:hidden md:px-6 md:py-3">
-                  Sign up
-                </Button>
+                <Button variant="ghost">Sign up</Button>
               </Link>
             </>
           )}
           {user && (
             <Link to="/profile">
-              <Button className="md:hidden md:px-6 md:py-3">My Profile</Button>
+              <Button>My Profile</Button>
             </Link>
           )}
         </div>

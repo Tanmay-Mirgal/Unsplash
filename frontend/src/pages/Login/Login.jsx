@@ -56,8 +56,8 @@ const Login = () => {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit}>
-            <div className="flex-1 flex items-center justify-center p-4 md:p-6">
-              <Card className="w-full max-w-md md:max-w-[400px]">
+            <div className="flex-1 flex items-center justify-center p-4">
+              <Card className="w-full max-w-md">
                 <CardHeader>
                   <img src={logo} alt=""
                     className='w-[50px] h-[50px] ml-[19.5vh] rounded-lg' />
