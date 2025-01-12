@@ -87,9 +87,9 @@ const UnsplashClone = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white md:bg-gray-100">
       {/* Hero Section */}
-      <div className="relative h-96">
+      <div className="relative h-96 md:h-screen">
         <div className="absolute inset-0">
           <img
             src={heroimg}
@@ -97,21 +97,21 @@ const UnsplashClone = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-black/30">
-          <div className="max-w-4xl mx-auto pt-20 px-4">
-            <h2 className="text-4xl font-bold text-white mb-4">
+        <div className="absolute inset-0 bg-black/30 md:bg-gray-500/30">
+          <div className="max-w-4xl mx-auto pt-20 px-4 md:pt-40 md:px-6">
+            <h2 className="text-4xl font-bold text-white md:text-6xl mb-4">
               The internet's source for visuals.
             </h2>
-            <p className="text-white mb-6">Powered by creators everywhere.</p>
+            <p className="text-white mb-6 md:mb-12">Powered by creators everywhere.</p>
             <div className="relative">
               <Input
                 type="search"
                 placeholder="Search high-resolution images, categories, wallpapers"
-                className="w-full pl-10 py-6"
+                className="w-full pl-10 py-6 md:pl-20 md:py-10"
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
-            <div className="mt-2 text-sm text-white">
+            <div className="mt-2 text-sm text-white md:text-lg md:mt-4">
               Trending: forest, wallpaper, background, happy, love
             </div>
           </div>
@@ -119,11 +119,11 @@ const UnsplashClone = () => {
       </div>
 
       {/* Image Grid */}
-      <div className="w-full p-4">
+      <div className="w-full p-4 md:p-6">
         {posts.length === 0 ? (
           <p>No posts available</p>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
             {posts.map((post) => (
               <div
                 key={post._id}
@@ -240,3 +240,4 @@ const UnsplashClone = () => {
 };
 
 export default UnsplashClone;
+

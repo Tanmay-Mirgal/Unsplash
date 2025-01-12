@@ -25,7 +25,6 @@ const UploadPost = ({ open, onOpenChange }) => {
 
   const { createPost, isLoading, isError, error } = usePostStore();
 
-  // Drag & drop handlers
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,7 +45,6 @@ const UploadPost = ({ open, onOpenChange }) => {
     }
   };
 
-  // File input handler
   const handleFileInput = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -54,7 +52,6 @@ const UploadPost = ({ open, onOpenChange }) => {
     }
   };
 
-  // Handle the image file
   const handleFile = (file) => {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
@@ -66,13 +63,11 @@ const UploadPost = ({ open, onOpenChange }) => {
     }
   };
 
-  // Clear the preview
   const clearPreview = () => {
     setPreview(null);
     setFile(null);
   };
 
-  // Handle text input change
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setPostData((prev) => ({
@@ -81,38 +76,23 @@ const UploadPost = ({ open, onOpenChange }) => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-  
-      // Append text data to formData
       Object.entries(postData).forEach(([key, value]) => {
         formData.append(key, value);
       });
-  
-      // Append the image file if it's selected
       if (file) {
         formData.append("image", file);
       } else {
         console.error("No file selected");
       }
-  
-      // Log formData entries for debugging
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-      }
-  
       const response = await createPost(formData);
       console.log("Post created successfully:", response.data);
     } catch (error) {
       console.error("Error creating post:", error.response ? error.response.data : error.message);
     }
-  };
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
   };
 
   return (
@@ -124,17 +104,15 @@ const UploadPost = ({ open, onOpenChange }) => {
 
         <div className="space-y-6">
           {!preview ? (
-            <div
-              className={`border-2 border-dashed rounded-lg p-8`}
-            >
-              <input type="file" onChange={handleFileChange} />
+            <div className="border-2 border-dashed rounded-lg p-8">
+              <input type="file" onChange={handleFileInput} className="w-full" />
             </div>
           ) : (
             <div className="relative">
               <img
                 src={preview}
                 alt="Preview"
-                className="w-40 h-40 object-cover rounded-lg"
+                className="w-full h-auto object-cover rounded-lg"
               />
               <Button
                 variant="secondary"
@@ -147,55 +125,53 @@ const UploadPost = ({ open, onOpenChange }) => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-4 overflow-y-auto max-h-80">
-              <div>
-                <Label htmlFor="title">Photo Title</Label>
-                <Input
-                  id="title"
-                  value={postData.title}
-                  onChange={handleInputChange}
-                  placeholder="Give your photo a title"
-                  className="mt-1"
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="title">Photo Title</Label>
+              <Input
+                id="title"
+                value={postData.title}
+                onChange={handleInputChange}
+                placeholder="Give your photo a title"
+                className="mt-1 w-full"
+              />
+            </div>
 
-              <div>
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  value={postData.description}
-                  onChange={handleInputChange}
-                  placeholder="Tell the story behind your photo"
-                  className="mt-1"
-                  rows={3}
-                />
-              </div>
+            <div>
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={postData.description}
+                onChange={handleInputChange}
+                placeholder="Tell the story behind your photo"
+                className="mt-1 w-full"
+                rows={3}
+              />
+            </div>
 
-              <div>
-                <Label htmlFor="tags">Tags</Label>
-                <Input
-                  id="tags"
-                  value={postData.tags}
-                  onChange={handleInputChange}
-                  placeholder="Add tags (separated by commas)"
-                  className="mt-1"
-                />
-                <p className="text-sm text-gray-500 mt-1">
-                  Add up to 25 tags to describe your photo
-                </p>
-              </div>
+            <div>
+              <Label htmlFor="tags">Tags</Label>
+              <Input
+                id="tags"
+                value={postData.tags}
+                onChange={handleInputChange}
+                placeholder="Add tags (separated by commas)"
+                className="mt-1 w-full"
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Add up to 25 tags to describe your photo
+              </p>
+            </div>
 
-              <div>
-                <Label htmlFor="location">Location (optional)</Label>
-                <Input
-                  id="location"
-                  value={postData.location}
-                  onChange={handleInputChange}
-                  placeholder="Where was this photo taken?"
-                  className="mt-1"
-                />
-              </div>
+            <div>
+              <Label htmlFor="location">Location (optional)</Label>
+              <Input
+                id="location"
+                value={postData.location}
+                onChange={handleInputChange}
+                placeholder="Where was this photo taken?"
+                className="mt-1 w-full"
+              />
             </div>
 
             <div className="flex justify-end gap-2">
@@ -214,3 +190,4 @@ const UploadPost = ({ open, onOpenChange }) => {
 };
 
 export default UploadPost;
+

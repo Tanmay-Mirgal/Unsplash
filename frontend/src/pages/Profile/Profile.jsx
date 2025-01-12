@@ -31,7 +31,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header user={parsedUser} />
-      <div className="max-w-xl px-4 py-2 -mt-9 ml-[30vh]">
+      <div className="max-w-xl px-4 py-2 -mt-9 ml-[calc(100vw-30vw)] md:ml-[30vh]">
         <div className="flex justify-evenly">
         <div
             className="text-center cursor-pointer"
@@ -86,3 +86,4 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+

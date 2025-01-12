@@ -48,26 +48,24 @@ const UpdateProfile = () => {
     const handleSaveChanges = async () => {
         try {
             const data = new FormData();
-            // Append text fields
             for (const [key, value] of Object.entries(formData)) {
                 data.append(key, value || '');
             }
 
-            // Append file if exists
             if (file) {
                 data.append('profilePic', file);
             }
 
-            const token = localStorage.getItem('token'); // Or wherever your token is stored
+            const token = localStorage.getItem('token');
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`, // Include the token
+                    'Authorization': `Bearer ${token}`,
                 }
             };
 
-            console.log("Sending request with data:", data);  // Log the data being sent
-            await axios.put("http://localhost:5000/api/auth/update-profile", data, config);
+            console.log("Sending request with data:", data);
+            const response = await axios.put("http://localhost:5000/api/auth/update-profile", data, config);
             toast.success("Profile updated successfully!");
             navigate("/profile");
         } catch (error) {
@@ -76,36 +74,35 @@ const UpdateProfile = () => {
         }
     };
 
-
     const handleRemoveImage = () => {
         setFile(null);
         setPreview(null);
         if (fileInputRef.current) {
-            fileInputRef.current.value = ''; // Clear the file input field
+            fileInputRef.current.value = '';
         }
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <div className="max-w-4xl mx-auto py-8 px-4">
+        <div className="min-h-screen bg-gray-50 md:px-4 md:py-8 md:flex md:flex-col">
+            <div className="md:max-w-4xl md:mx-auto md:py-8 md:px-4">
                 <h1 className="text-3xl font-bold mb-2">Edit Profile</h1>
-                <Tabs defaultValue="profile" className="space-y-6">
-                    <TabsList className="w-full justify-start bg-transparent border-b rounded-none h-auto p-0 space-x-8">
+                <Tabs defaultValue="profile" className="space-y-6 md:space-y-12">
+                    <TabsList className="w-full justify-start bg-transparent border-b rounded-none h-auto p-0 space-x-8 md:space-x-12">
                         <TabsTrigger
                             value="profile"
-                            className="data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none pb-4"
+                            className="data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none pb-4 md:pb-8"
                         >
                             Profile
                         </TabsTrigger>
                         <TabsTrigger
                             value="account"
-                            className="data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none pb-4"
+                            className="data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none pb-4 md:pb-8"
                         >
                             Account Settings
                         </TabsTrigger>
                     </TabsList>
 
-                    <TabsContent value="profile" className="space-y-6">
+                    <TabsContent value="profile" className="space-y-6 md:space-y-12">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Profile Picture</CardTitle>
@@ -114,7 +111,7 @@ const UpdateProfile = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="flex items-center space-x-6">
+                                <div className="flex items-center space-x-6 md:space-x-12">
                                     <div className="relative">
                                         <div className="h-24 w-24 rounded-full overflow-hidden bg-gray-200">
                                             {preview ? (
@@ -164,8 +161,8 @@ const UpdateProfile = () => {
                                     Update your personal information
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
+                            <CardContent className="space-y-4 md:space-y-8">
+                                <div className="grid grid-cols-2 gap-4 md:gap-8">
                                     <div>
                                         <Label htmlFor="firstName">First Name</Label>
                                         <Input
@@ -228,7 +225,7 @@ const UpdateProfile = () => {
                                     Add links to your profiles or websites
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent className="space-y-4">
+                            <CardContent className="space-y-4 md:space-y-8">
                                 <div>
                                     <Label htmlFor="location">Location</Label>
                                     <Input
@@ -298,3 +295,4 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
+
