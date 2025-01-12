@@ -30,7 +30,7 @@ cloudinary.config({
 
 app.use(
     cors({
-      origin: process.env.NODE_ENV === "production" ? process.env.CLIENT_URL : "http://localhost:5173",
+        origin: process.env.NODE_ENV === "production" ? process.env.CLIENT_URL : "https://unsplash-ytfm.onrender.com",
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add necessary methods
       allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
