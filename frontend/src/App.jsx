@@ -21,7 +21,7 @@ function App() {
     isLoading: state.isLoading,
   }));
   
-  const token = localStorage.getItem("accessToken"); // FIXED
+  const token = localStorage.getItem("token"); // FIXED
   const isAuthenticated = !!token;
 
   useEffect(() => {
